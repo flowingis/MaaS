@@ -1,0 +1,25 @@
+{
+  "name": "meme-as-a-service",
+  "version": "1.0.0",
+  "description": "Meme as a service",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.13.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://Fuminshou@bitbucket.org/Fuminshou/maas.git"
+  },
+  "keywords": [
+    "meme",
+    "service",
+    "node"
+  ],
+  "author": "Nicole Bartolini, Simone D'Amico",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/Fuminshou/maas#readme"
+}
