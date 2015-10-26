@@ -42,7 +42,6 @@ app.get('/meme/:name', function(req, res){
     res.end(img, 'binary');
 });
 
-var server = app.listen(8088, function(){
-    console.log(__dirname);
-    console.log('Mi chiamo '+ server.address().address);
+var server = app.listen(app.get('port'), function(){
+    console.log('Server is running on port '+app.get('port'));
 });
