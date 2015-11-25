@@ -51,7 +51,7 @@ app.get('/meme/:name', function (req, res) {
 app.post('/slack', function (req, res) {
     var slack_token = envs('TOKEN');
 
-    res.end(req.body.text + ' ' + slack_token);
+    //prendersi il body e in base a quello fare cose
 });
 
 
