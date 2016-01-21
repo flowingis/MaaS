@@ -66,6 +66,7 @@ app.post('/slack', function (req, res) {
 
     res.writeHead(200, {"Content-Type": "application/json"});
     res.end(JSON.stringify({
+        "response_type": "in_channel",
         "text": "",
         "attachments": [
             {
