@@ -4,6 +4,7 @@
   "description": "Meme as a service",
   "main": "index.js",
   "dependencies": {
+    "body-parser": "^1.14.2",
     "envs": "^0.1.6",
     "express": "^4.13.3"
   },

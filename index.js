@@ -1,11 +1,14 @@
 var express = require('express');
 var fs = require('fs');
 var envs = require('envs');
+var bodyParser = require('body-parser');
 var app = express();
 
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
     res.end('Ciao');
@@ -49,9 +52,32 @@ app.get('/meme/:name', function (req, res) {
 });
 
 app.post('/slack', function (req, res) {
-    var slack_token = envs('TOKEN');
+    //var slacktoken = envs('TOKEN');
+    var filename = __dirname + '/images/' + req.body.text + '.png';
+    var imageurl = 'http://' + req.headers.host + '/meme/' + req.body.text;
 
-    //prendersi il body e in base a quello fare cose
+    try {
+        var img = fs.readFileSync(filename);
+
+    } catch (err) {
+        res.writeHead(200, {"Content-Type": "application/json"});
+        res.end('File not found');
+    }
+
+    res.writeHead(200, {"Content-Type": "application/json"});
+    res.end(JSON.stringify({
+        "text": "",
+        "attachments": [
+            {
+                "fallback": req.body.text,
+
+                "color": "#fff",
+
+                "image_url": imageurl,
+                "thumb_url": imageurl
+            }
+        ]
+    }));
 });
 
 
