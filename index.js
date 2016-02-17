@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
     res.end('Ciao');
-    /* mettere documentazione - usage */
+    /* TODO mettere documentazione - usage */
 });
 
 app.get('/memes', function (req, res) {
@@ -56,12 +56,50 @@ app.post('/slack', function (req, res) {
     var filename = __dirname + '/images/' + req.body.text + '.png';
     var imageurl = 'http://' + req.headers.host + '/meme/' + req.body.text;
 
+    if (req.body.text == 'list') {
+        fs.readdir(__dirname + '/images/', function (err, files) {
+            if (err) {
+                console.log(err);
+            }
+
+            var memes = [];
+            files.forEach(function (f) {
+                var name = f.replace('.png', '');
+
+                memes.push("• " + name);
+            });
+
+            res.writeHead(200, {"Content-Type": "application/json"});
+            res.end(JSON.stringify({
+                "response_type": "in_channel",
+                "text": "These are the valid memes:\n" +
+                    memes.join("\n") + "\n\n" +
+                    "Use `/meme meme_name_string` to post the selected meme in channel.",
+                "attachments": []
+            }));
+        });
+
+        return;
+    } else if (req.body.text == 'help') {
+        res.writeHead(200, {"Content-Type": "application/json"});
+        res.end(JSON.stringify({
+            "response_type": "in_channel",
+            "text": "Use `/meme meme_name_string` to post the selected meme in channel. Some examples:\n"+
+                    "• `/meme oh_god_why`\n"+
+                    "• `/remind me_gusta`\n"+
+                    "Remember to use `/meme list` to see the list of all memes oer visit ideato-maas.herokuapp.com for more info",
+            "attachments": []
+        }));
+
+        return;
+    }
+
     try {
         var img = fs.readFileSync(filename);
 
     } catch (err) {
         res.writeHead(200, {"Content-Type": "application/json"});
-        res.end('File not found');
+        res.end('File not found. Type `/meme help` to see some hints');
     }
 
     res.writeHead(200, {"Content-Type": "application/json"});
