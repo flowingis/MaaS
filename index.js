@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
-    res.end('Ciao');
+    res.end('Under construction ᕦ(ò_ó*)ᕤ');
     /* TODO mettere documentazione - usage */
 });
 
@@ -71,9 +71,10 @@ app.post('/slack', function (req, res) {
 
             res.writeHead(200, {"Content-Type": "application/json"});
             res.end(JSON.stringify({
-                "response_type": "in_channel",
+                "response_type": "ephemeral",
                 "text": "These are the valid memes:\n" +
                     memes.join("\n") + "\n\n" +
+                    "Head to ideato-maas.herokuapp.com/memes to see the full list!" +
                     "Use `/meme meme_name_string` to post the selected meme in channel.",
                 "attachments": []
             }));
@@ -83,10 +84,10 @@ app.post('/slack', function (req, res) {
     } else if (req.body.text == 'help') {
         res.writeHead(200, {"Content-Type": "application/json"});
         res.end(JSON.stringify({
-            "response_type": "in_channel",
-            "text": "Use `/meme meme_name_string` to post the selected meme in channel. Some examples:\n"+
-                    "• `/meme oh_god_why`\n"+
-                    "• `/remind me_gusta`\n"+
+            "response_type": "ephemeral",
+            "text": "Use `/meme meme_name_string` to post the selected meme in channel. Some examples:\n" +
+                    "• `/meme oh_god_why`\n" +
+                    "• `/meme me_gusta`\n" +
                     "Remember to use `/meme list` to see the list of all memes oer visit ideato-maas.herokuapp.com for more info",
             "attachments": []
         }));
